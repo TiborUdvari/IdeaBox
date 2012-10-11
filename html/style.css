@@ -50,7 +50,7 @@ nav {
 	max-width: 1000px;
 	background-color: #c0c0c0;
 	width: 80%;
-	height: 500px;
+	height: 680px;
 	margin: 0 auto 0 auto;
 }
 
@@ -77,22 +77,52 @@ nav ul li {
 	float: left;
 }
 
+#content {
+	height: 100%;
+	max-height: 900px;
+	width: 100%;
+}
+
+.descriptionsBlock {
+	margin: 0 auto;
+}
+
 .description {
-	width: 50%;
+	width: 45%;
 	height: 200px;
-	background-color: yellow;
+	background-color: #a0a0a0;
+	padding: 1%;
 	display: inline-block;
+	margin-top: 1.9%;
+	-moz-box-shadow: 10px 10px 5px #888;
+	-webkit-box-shadow: 10px 10px 5px #888;
+	box-shadow: 10px 10px 5px #888;
+	-moz-border-radius: 2%;
+	border-radius: 2%;
+}
+
+.description:nth-child(odd) {
 	float: left;
+	margin-left: 1.9%;
+	margin-right: 0.7%;
+}
+
+.description:nth-child(even) {
+	float: right;
+	margin-right: 1.9%;
+	margin-left: 0.7%;
 }
 
 .descriptionImage {
 	float: left;
 	width: 15%;
+	margin-right: 1em;
+	margin-bottom: 1em;
 }
 
 .descriptionTitle {
-	float: left;
 	clear: right;
+	margin-bottom: 0.8em;
 }
 
 #welcomePresentationList li {
@@ -115,4 +145,5 @@ h3 {
 footer {
 	height: 2em;
 	background-color: blue;
+	display: block;
 }
