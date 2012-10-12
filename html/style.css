@@ -100,6 +100,11 @@ nav ul li {
 	-moz-border-radius: 2%;
 	border-radius: 2%;
 }
+.description:hover
+{
+	background-color: #EEC16F;
+	box-shadow: 10px 10px 5px #c96332;
+}
 
 .description:nth-child(odd) {
 	float: left;
