@@ -99,6 +99,8 @@ nav ul li {
 	box-shadow: 10px 10px 5px #888;
 	-moz-border-radius: 2%;
 	border-radius: 2%;
+	-moz-transition: background 0.5s ease;
+	transition: background 0.5s ease;
 }
 .description:hover
 {
