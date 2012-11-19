@@ -17,6 +17,13 @@ class ProjectController extends AbstractActionController
             'projects' => $this->getProjectTable()->fetchAll(),
         ));
     }
+	
+	public function homeAction()
+    {
+        return new ViewModel(array(
+            'projects' => $this->getProjectTable()->fetchAll(),
+        ));
+    }
 
     public function addAction()
     {

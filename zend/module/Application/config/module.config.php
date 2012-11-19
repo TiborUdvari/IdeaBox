@@ -11,7 +11,7 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'Project\Controller\Project',
-                        'action'     => 'index'
+                        'action'     => 'home'
                     ),
                 ),
             ),
