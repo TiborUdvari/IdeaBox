@@ -15,8 +15,8 @@ return array(
     'db' => array(
         'driver' => 'Pdo',
         'dsn'            => 'mysql:dbname=ideabox;hostname=localhost',
-        'username'       => 'ideabox',
-        'password'       => 'ideabox',
+        'username'       => 'root',
+        'password'       => 'totoaimelabiere',
         'driver_options' => array(
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
         ),

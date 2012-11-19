@@ -37,7 +37,7 @@ class UserTable
 	if (!$row) {
             return false;
         }
-	$toto = $row->password;
+	$toto = $row['password'];
         if($toto == $password)
         	return true;
 	else
