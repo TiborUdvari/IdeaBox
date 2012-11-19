@@ -1,0 +1,19 @@
+<?php
+$title = $this->translate('Users');
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<table class="table">
+<tr>
+    <th><?php echo $this->translate('First name'); ?></th>
+    <th><?php echo $this->translate('Last name'); ?></th>
+    <th>&nbsp;</th>
+</tr>
+<?php foreach($users as $user) : ?>
+<tr>
+    <td><?php echo $this->escapeHtml($user->firstname);?></td>
+    <td><?php echo $this->escapeHtml($user->lastname);?></td>
+</tr>
+<?php endforeach; ?>
+</table>
