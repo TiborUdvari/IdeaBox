@@ -6,6 +6,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Project\Model\Project;
 use Project\Form\ProjectForm;
+use Zend\Session\Container;
 
 class ProjectController extends AbstractActionController
 {
@@ -43,6 +44,13 @@ class ProjectController extends AbstractActionController
 
     public function addAction()
     {
+		$session = new Container('ideabox');
+		if(!$session->offsetExists('email'))
+		{
+			// redirect to home page
+			return $this->redirect()->toRoute('Project', array( 'action' => 'home' ));
+		}	
+	
         $form = new ProjectForm();
         $form->get('submit')->setAttribute('value', 'Add');
 

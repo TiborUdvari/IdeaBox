@@ -70,10 +70,15 @@ class UserController extends AbstractActionController
             $ok = $this->getUserTable()->isValidLogin($email, $password);
 	    if($ok)
 	    {
-		$session = new Container('ideabox');
-		$session->offsetSet('email', $email);
-		return $this->redirect()->toRoute('User');
-            }
+			$session = new Container('ideabox');
+			$session->offsetSet('email', $email);
+			
+			$user = $this->getUserTable()->getUserByEmail($email);
+			$id = $user->pkuser;
+			$session->offsetSet('id', $id);
+			
+			return $this->redirect()->toRoute('User', array('action' => 'myProfile'));
+        }
 	    else
 	    {
 		return $this->redirect()->toRoute('Project');

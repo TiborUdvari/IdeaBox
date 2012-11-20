@@ -11,33 +11,57 @@ class ProjectForm extends Form
         parent::__construct('Project');
 
         $this->setAttribute('method', 'post');
-        $this->add(array(
-            'name' => 'id',
-            'attributes' => array(
-                'type'  => 'hidden',
-            ),
-        ));
 
         $this->add(array(
-            'name' => 'artist',
+            'name' => 'name',
             'attributes' => array(
                 'type'  => 'text',
             ),
             'options' => array(
-                'label' => 'Artist',
+                'label' => 'Name',
             ),
         ));
 
         $this->add(array(
-            'name' => 'title',
+            'name' => 'short_description',
             'attributes' => array(
                 'type'  => 'text',
             ),
             'options' => array(
-                'label' => 'Title',
+                'label' => 'Short description',
+            ),
+        ));
+		
+		$this->add(array(
+            'name' => 'long_description',
+            'attributes' => array(
+                'type'  => 'text',
+            ),
+            'options' => array(
+                'label' => 'Long description',
             ),
         ));
 
+		$this->add(array(
+            'name' => 'image',
+            'attributes' => array(
+                'type'  => 'text',
+            ),
+            'options' => array(
+                'label' => 'Image URL',
+            ),
+        ));
+		
+		$this->add(array(
+            'name' => 'ispublic',
+            'attributes' => array(
+                'type'  => 'checkbox',
+            ),
+            'options' => array(
+                'label' => 'Public',
+            ),
+        ));
+		
         $this->add(array(
             'name' => 'submit',
             'attributes' => array(

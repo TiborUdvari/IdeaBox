@@ -45,16 +45,16 @@ class Project //implements InputFilterAwareInterface
         // throw new \Exception("Not used");
     // }
 
-    // public function getInputFilter()
-    // {
-        // if (!$this->inputFilter) {
-            // $inputFilter = new InputFilter();
+    public function getInputFilter()
+    {
+        if (!$this->inputFilter) {
+            $inputFilter = new InputFilter();
 
-            // $factory = new InputFactory();
+            $factory = new InputFactory();
 
-            // $this->inputFilter = $inputFilter;        
-        // }
+            $this->inputFilter = $inputFilter;        
+        }
 
-        // return $this->inputFilter;
-    // }
+        return $this->inputFilter;
+    }
 }
