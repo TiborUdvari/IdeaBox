@@ -18,6 +18,21 @@ class UserController extends AbstractActionController
             'users' => $this->getUserTable()->fetchAll(),
         ));
     }
+	
+	public function myProfileAction()
+	{
+		$session = new Container('ideabox');
+		if(!$session->offsetExists('email'))
+		{
+			// redirect to home page
+			return $this->redirect()->toRoute('Project', array( 'action' => 'home' ));
+		}
+	
+		$email = $session->offsetGet('email');
+		return new ViewModel(array(
+            'user' => $this->getUserTable()->getUserByEmail($email),
+        ));
+	}
 
     public function logoutAction()
     {
