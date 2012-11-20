@@ -6,14 +6,15 @@ $this->headTitle($title);
 
 <table class="table">
 <tr>
-    <th><?php echo $this->translate('First name'); ?></th>
-    <th><?php echo $this->translate('Last name'); ?></th>
-    <th>&nbsp;</th>
+    <th><?php echo $this->translate('Name'); ?></th>
 </tr>
 <?php foreach($users as $user) : ?>
 <tr>
-    <td><?php echo $this->escapeHtml($user->firstname);?></td>
-    <td><?php echo $this->escapeHtml($user->lastname);?></td>
+    <td>
+	<a href="/User/show/<?php echo $user->pkuser; ?>">
+	<?php echo $this->escapeHtml($user->firstname) . " " . $this->escapeHtml($user->lastname);?>
+	</a>
+	</td>
 </tr>
 <?php endforeach; ?>
 </table>

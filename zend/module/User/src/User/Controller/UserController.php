@@ -33,6 +33,14 @@ class UserController extends AbstractActionController
             'user' => $this->getUserTable()->getUserByEmail($email),
         ));
 	}
+	
+	public function showAction()
+	{
+	$id = (int)$this->params('id');
+		return new ViewModel(array(
+            'user' => $this->getUserTable()->getUser($id),
+        ));
+	}
 
     public function logoutAction()
     {

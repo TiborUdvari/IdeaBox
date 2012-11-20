@@ -1,0 +1,40 @@
+<?php
+$title = $this->translate('User profile');
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<table class="table">
+<tr>
+	<td>
+    <?php echo $this->translate('First name'); ?>
+	</td>
+	<td>
+	<?php echo $user->firstname; ?>
+	</td>
+</tr>
+<tr>
+	<td>
+	<?php echo $this->translate('Last name'); ?>
+	</td>
+	<td>
+	<?php echo $user->lastname; ?>
+	</td>
+</tr>
+<tr>
+	<td>
+	<?php echo $this->translate('Email'); ?>
+	</td>
+	<td>
+	<?php echo $user->email; ?>
+	</td>
+</tr>
+<tr>
+	<td>
+	<?php echo $this->translate('Description'); ?>
+	</td>
+	<td>
+	<?php echo $user->description; ?>
+	</td>
+</tr>
+</table>
