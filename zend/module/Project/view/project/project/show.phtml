@@ -1,0 +1,45 @@
+<?php
+$title = $this->translate('Project profile');
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<table class="table">
+<tr>
+	<td>
+    <?php echo $this->translate('Name'); ?>
+	</td>
+	<td>
+	<?php echo $project->name; ?>
+	</td>
+</tr>
+<tr>
+	<td>
+	<?php echo $this->translate('Creation date'); ?>
+	</td>
+	<td>
+	<?php echo $project->creationdate; ?>
+	</td>
+</tr>
+<tr>
+	<td>
+	<?php echo $this->translate('Short description'); ?>
+	</td>
+	<td>
+	<?php echo $project->short_description; ?>
+	</td>
+</tr>
+<tr>
+	<td>
+	<?php echo $this->translate('Long description'); ?>
+	</td>
+	<td>
+	<?php echo $project->long_description; ?>
+	</td>
+</tr>
+<tr>
+	<td colspan="2">
+	<img src="<?php echo $project->image; ?>" />
+	</td>
+</tr>
+</table>

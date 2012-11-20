@@ -33,6 +33,7 @@ class ProjectTable
     public function saveProject(Project $Project)
     {
         $data = array(
+			'name' => $Project->name,
             'short_description' => $Project->short_description,
             'long_description'  => $Project->long_description,
 			'image'  => $Project->image,

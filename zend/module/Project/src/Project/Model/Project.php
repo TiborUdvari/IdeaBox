@@ -10,6 +10,8 @@ use Zend\InputFilter\InputFilterInterface;
 class Project //implements InputFilterAwareInterface
 {
     public $pkproject;
+	public $name;
+	public $creationdate;
     public $short_description;
     public $long_description;
 	public $image;
@@ -24,6 +26,8 @@ class Project //implements InputFilterAwareInterface
     public function exchangeArray($data)
     {
         $this->pkproject     = (isset($data['pkproject'])) ? $data['pkproject'] : null;
+		$this->name     = (isset($data['name'])) ? $data['name'] : null;
+		$this->creationdate     = (isset($data['creationdate'])) ? $data['creationdate'] : null;
         $this->short_description = (isset($data['short_description'])) ? $data['short_description'] : null;
         $this->long_description  = (isset($data['long_description'])) ? $data['long_description'] : null;
 		$this->image  = (isset($data['image'])) ? $data['image'] : null;

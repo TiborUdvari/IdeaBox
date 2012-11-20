@@ -6,14 +6,18 @@ $this->headTitle($title);
 
 <table class="table">
 <tr>
+    <th><?php echo $this->translate('Name'); ?></th>
     <th><?php echo $this->translate('Short description'); ?></th>
-    <th><?php echo $this->translate('Long description'); ?></th>
     <th>&nbsp;</th>
 </tr>
 <?php foreach($projects as $project) : ?>
 <tr>
+    <td>
+	<a href="/Project/show/<?php echo $project->pkproject; ?>">
+	<?php echo $this->escapeHtml($project->name);?>
+	</a>
+	</td>
     <td><?php echo $this->escapeHtml($project->short_description);?></td>
-    <td><?php echo $this->escapeHtml($project->long_description);?></td>
 </tr>
 <?php endforeach; ?>
 </table>

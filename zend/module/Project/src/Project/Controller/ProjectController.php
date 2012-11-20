@@ -18,6 +18,22 @@ class ProjectController extends AbstractActionController
         ));
     }
 	
+	public function showAction()
+	{
+		$id = (int)$this->params('id');
+		try
+		{
+			return new ViewModel(array(
+				'project' => $this->getProjectTable()->getProject($id),
+			));
+		} 
+		catch(\Exception $pokemon)
+		{
+			// redirect to home page
+			return $this->redirect()->toRoute('Project', array( 'action' => 'home' ));
+		}
+	}
+	
 	public function homeAction()
     {
         return new ViewModel(array(
