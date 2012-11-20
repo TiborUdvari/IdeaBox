@@ -36,18 +36,26 @@ class UserController extends AbstractActionController
 	
 	public function showAction()
 	{
-	$id = (int)$this->params('id');
-		return new ViewModel(array(
-            'user' => $this->getUserTable()->getUser($id),
-        ));
+		$id = (int)$this->params('id');
+		try
+		{
+			return new ViewModel(array(
+				'user' => $this->getUserTable()->getUser($id),
+			));
+		} 
+		catch(\Exception $pokemon)
+		{
+			// redirect to home page
+			return $this->redirect()->toRoute('Project', array( 'action' => 'home' ));
+		}
 	}
 
     public function logoutAction()
     {
-	$session = new Container('ideabox');
-	$session->getManager()->destroy();
-	//on adore la syntaxe ...
-        return $this->redirect()->toRoute('Project', array( 'action' => 'home' ));
+		$session = new Container('ideabox');
+		$session->getManager()->destroy();
+		//on adore la syntaxe ...
+		return $this->redirect()->toRoute('Project', array( 'action' => 'home' ));
     }
 
     public function loginAction()
