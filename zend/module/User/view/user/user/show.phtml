@@ -2,6 +2,44 @@
 $title = $this->translate('User profile');
 $this->headTitle($title);
 ?>
+
+<script src="/js/RGraph/libraries/RGraph.common.core.js"></script>
+<script src="/js/RGraph/libraries/RGraph.common.dynamic.js"></script>
+<script src="/js/RGraph/libraries/RGraph.common.tooltips.js"></script>
+<script src="/js/RGraph/libraries/RGraph.common.effects.js"></script>
+<script src="/js/RGraph/libraries/RGraph.hbar.js"></script>
+
+<?php
+	$levels = "[";
+	$names = "[";
+	$descriptions = "[";
+	
+	foreach($skills as $skill)
+	{
+		$levels = $levels . $skill->level . ",";
+		$names = $names . "'". addslashes($skill->name) . "',";
+		$descriptions = $descriptions . "'". addslashes($skill->description) . "',";
+	}
+	
+	$levels = $levels . "]";
+	$names = $names . "]";
+	$descriptions = $descriptions . "]";
+?>
+
+<script>
+        window.onload = function ()
+        {
+            var hbar = new RGraph.HBar('skills', <?php echo $levels; ?>);
+			hbar.Set('chart.title', 'Skills');
+            hbar.Set('chart.labels', <?php echo $names; ?>);
+			hbar.Set('chart.tooltips', <?php echo $descriptions; ?>);
+			hbar.Set('chart.tooltips.event', 'onmousemove');
+			hbar.Set('chart.shadow', true);
+			hbar.Set('chart.xmax', 100);
+            hbar.Draw();
+        }
+</script>
+
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
 <table class="table">
@@ -38,3 +76,5 @@ $this->headTitle($title);
 	</td>
 </tr>
 </table>
+
+<canvas id="skills" width="950" height="400"></canvas>

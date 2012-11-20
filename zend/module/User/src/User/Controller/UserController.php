@@ -11,6 +11,8 @@ use User\Form\LoginForm;
 class UserController extends AbstractActionController
 {
     protected $userTable;
+	protected $skillTable;
+	protected $assocUserSkillTable;
 
     public function indexAction()
     {
@@ -37,10 +39,24 @@ class UserController extends AbstractActionController
 	public function showAction()
 	{
 		$id = (int)$this->params('id');
+		$user = $this->getUserTable()->getUser($id);
+		$assocUserSkills = $this->getAssocUserSkillTable()->getAssocSkills($user->pkuser);
+		
+		$userSkills = array();
+		
+		foreach($assocUserSkills as $assocUserSkill)
+		{
+			$skill = $this->getSkillTable()->getSkill($assocUserSkill->fkskill);
+			$skill->level = $assocUserSkill->level;
+			$skill->description = $assocUserSkill->description;
+			array_push($userSkills, $skill);
+		}
+		
 		try
 		{
 			return new ViewModel(array(
 				'user' => $this->getUserTable()->getUser($id),
+				'skills' => $userSkills,
 			));
 		} 
 		catch(\Exception $pokemon)
@@ -150,5 +166,22 @@ class UserController extends AbstractActionController
             $this->userTable = $sm->get('User\Model\UserTable');
         }
         return $this->userTable;
+    }
+	
+	public function getSkillTable()
+    {
+        if (!$this->skillTable) {
+            $sm = $this->getServiceLocator();
+            $this->skillTable = $sm->get('User\Model\SkillTable');
+        }
+        return $this->skillTable;
+    }
+	public function getAssocUserSkillTable()
+    {
+        if (!$this->assocUserSkillTable) {
+            $sm = $this->getServiceLocator();
+            $this->assocUserSkillTable = $sm->get('User\Model\AssocUserSkillTable');
+        }
+        return $this->assocUserSkillTable;
     }
 }

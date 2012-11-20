@@ -1,0 +1,62 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../libraries/RGraph.common.effects.js" ></script>
+    <script src="../libraries/RGraph.pie.js" ></script>
+    
+    <title>Pie chart Explode</title>
+</head>
+<body>
+
+    <h1>Pie chart explode</h1>
+
+    <canvas id="cvs" width="450" height="300">[No canvas support]</canvas>
+    
+<script>
+    window.onload = function ()
+    {
+        // Create the Pie chart
+        var pie = new RGraph.Pie('cvs', [4,6,3,5,2,5,8]);
+        pie.Set('chart.labels', ['Monday', 'Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']);
+        pie.Set('chart.text.color', '#aaa');
+        pie.Set('chart.exploded', []);
+        pie.Set('chart.radius', 100);
+        pie.Draw();        
+        
+            
+        // Add the click listener for the third segment
+        pie.onclick = function (e, shape)
+        {
+            if (!pie.Get('chart.exploded') || !pie.Get('chart.exploded')[shape['index']]) {
+                pie.Explode(shape['index'], 25);
+            }
+            
+            e.stopPropagation();
+        }
+        
+        // Add the mousemove listener for the third segment
+        pie.onmousemove = function (e, shape)
+        {
+            e.target.style.cursor = 'pointer';
+        }
+
+        // Add the window click listener that resets the Pie chart
+        pie.canvas.onclick_rgraph = function (e)
+        {
+            pie.Set('chart.exploded', []);
+            RGraph.Redraw();
+        }
+    }
+</script>
+
+    <p>        
+        <a href="./">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

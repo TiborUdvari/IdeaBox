@@ -1,0 +1,50 @@
+<html>
+<head>
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.bar.js" ></script>
+    
+    <title>A bar chart with horizontal gradients</title>
+</head>
+<body>
+
+    <h1>A bar chart with horizontal gradients</h1>
+    
+    <p>
+        This bar chart draws the chart then uses the coordinates of the bars to create gradients (each is specific to a bar),
+        changes the colors to the gradients and finally redraws the chart.
+    </p>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+    <script>
+        var bar = new RGraph.Bar('cvs', [4,8,5,3,4,6,8]);
+        bar.Set('chart.labels', ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']);
+        bar.Set('chart.colors.sequential', true);
+        bar.Set('chart.shadow', true);
+        bar.Set('chart.shadow.color', '#ccc');
+        bar.Draw();
+        
+        /**
+        * Now the chart has been drawn use the coords to create some appropriate gradients
+        */
+        for (var i=0,colors=[]; i<bar.coords.length; ++i) {
+        
+            var x = bar.coords[i][0];
+            var y = bar.coords[i][1];
+            var w = bar.coords[i][0] + bar.coords[i][2];
+            var h = bar.coords[i][1];
+
+            colors[i] = RGraph.LinearGradient(bar, x, y, w, h, '#c00', 'red')
+        }
+
+        bar.Set('chart.colors', colors);
+        RGraph.Clear(bar.canvas);
+        RGraph.Redraw();
+    </script>
+
+    <p>
+        <a href="./">&laquo; Back</a>
+    </p>
+
+</body>
+</html>
