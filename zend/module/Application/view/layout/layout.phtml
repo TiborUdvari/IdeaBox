@@ -1,3 +1,6 @@
+<?php
+use Zend\Session\Container;
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -30,7 +33,16 @@
 							My profile
 						</li>
 						<li>
-							<a href="/User/login">Login</a>
+							<?php
+							$session = new Container('ideabox');
+							if($session->offsetExists('email'))
+							{
+						          //echo 'Logged in as '.$session->offsetGet('email');
+							  ?><a href="/User/logout">Logout</a><?php
+							}
+							else
+							{?>
+								<a href="/User/login">Login</a><?php } ?>
 						</li>
 					</ul>
 				</nav>

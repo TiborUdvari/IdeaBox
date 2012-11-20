@@ -4,6 +4,7 @@ namespace User\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Session\Container;
 use User\Model\User;
 use User\Form\LoginForm;
 
@@ -18,6 +19,13 @@ class UserController extends AbstractActionController
         ));
     }
 
+    public function logoutAction()
+    {
+	$session = new Container('ideabox');
+	$session->getManager()->destroy();
+        return $this->redirect()->toRoute('Project', array( 'action' => 'home' ));
+    }
+
     public function loginAction()
     {
         $form = new LoginForm();
@@ -30,6 +38,8 @@ class UserController extends AbstractActionController
             $ok = $this->getUserTable()->isValidLogin($email, $password);
 	    if($ok)
 	    {
+		$session = new Container('ideabox');
+		$session->offsetSet('email', $email);
 		return $this->redirect()->toRoute('User');
             }
 	    else
