@@ -5,16 +5,20 @@ namespace Project\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Project\Model\Project;
+use Project\Model\RequestTable;
+use Project\Model\Request;
 use Project\Form\ProjectForm;
+use Project\Form\RequestForm;
 use Zend\Session\Container;
 use User\Model\UserTable;
 
 class ProjectController extends AbstractActionController
 {
     protected $projectTable;
-	protected $roleTable;
-	protected $assocUserProjectTable;
-	protected $userTable;
+    protected $roleTable;
+    protected $assocUserProjectTable;
+    protected $userTable;
+    protected $requestTable;
 
     public function indexAction()
     {
@@ -23,6 +27,47 @@ class ProjectController extends AbstractActionController
         ));
     }
 	
+	public function joinAction()
+	{
+		$session = new Container('ideabox');
+		$projectID = (int)$this->params('id');
+		if(!$session->offsetExists('id'))
+		{
+			// redirect to home page
+			return $this->redirect()->toRoute('Project', array( 'action' => 'home' ));
+		}
+	
+		$id = $session->offsetGet('id');
+		$rolesRaw = $this->getRoleTable()->fetchAll();
+		$roles = array();
+		foreach($rolesRaw as $role)
+		{
+			//array_push($roles, $role->pkrole => $role->role);
+			$roles[$role->pkrole] = $role->role;
+		}
+		$form = new RequestForm($roles, $projectID);
+		$request = $this->getRequest();
+		if ($request->isPost()) {
+		    	$roleID = $request->getPost()->get('role', '');
+			$comment = $request->getPost()->get('comment', '');
+		    	$demand = new Request();
+			$demand->fkuser_source = $id;
+			$demand->fkuser_destination = $this->getProjectTable()->getProject($projectID)->fkowner;
+			$demand->fkrole = $roleID;
+			echo "project id : ".$projectID;
+			$demand->fkproject = $projectID;
+			$demand->comment = $comment;
+			$demand->state = 0;
+			$demand->id = 0;
+			$this->getRequestTable()->saveRequest($demand);
+			
+
+		    // Redirect to list of Users
+		    return $this->redirect()->toRoute('User');
+		}
+		return array('form' => $form, 'id' => $projectID);
+	}
+
 	public function showAction()
 	{
 		$id = (int)$this->params('id');
@@ -184,5 +229,14 @@ class ProjectController extends AbstractActionController
             $this->userTable = $sm->get('User\Model\UserTable');
         }
         return $this->userTable;
+    }
+
+        public function getRequestTable()
+    {
+        if (!$this->requestTable) {
+            $sm = $this->getServiceLocator();
+            $this->requestTable = $sm->get('Project\Model\RequestTable');
+        }
+        return $this->requestTable;
     }
 }

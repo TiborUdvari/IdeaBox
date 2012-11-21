@@ -1,0 +1,17 @@
+<?php
+$title = 'Join';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('Project', array('action' => 'join')));
+$form->prepare();
+
+echo $this->form()->openTag($form) . PHP_EOL;
+echo $this->formSelect($form->get('role')) . PHP_EOL;
+echo $this->formRow($form->get('comment')) . PHP_EOL;
+//echo $this->formHidden($form->get('projectID')) . PHP_EOL;
+echo $this->formInput($form->get('submit')) . PHP_EOL;
+echo $this->form()->closeTag($form) . PHP_EOL;

@@ -5,12 +5,20 @@ namespace Project\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Project\Model\Project;
+use Project\Model\RequestTable;
+use Project\Model\Request;
 use Project\Form\ProjectForm;
+use Project\Form\RequestForm;
 use Zend\Session\Container;
+use User\Model\UserTable;
 
 class ProjectController extends AbstractActionController
 {
     protected $projectTable;
+    protected $roleTable;
+    protected $assocUserProjectTable;
+    protected $userTable;
+    protected $requestTable;
 
     public function indexAction()
     {
@@ -19,13 +27,74 @@ class ProjectController extends AbstractActionController
         ));
     }
 	
+	public function joinAction()
+	{
+		$session = new Container('ideabox');
+		$projectID = (int)$this->params('id');
+		if(!$session->offsetExists('id'))
+		{
+			// redirect to home page
+			return $this->redirect()->toRoute('Project', array( 'action' => 'home' ));
+		}
+	
+		$id = $session->offsetGet('id');
+		$rolesRaw = $this->getRoleTable()->fetchAll();
+		$roles = array();
+		foreach($rolesRaw as $role)
+		{
+			//array_push($roles, $role->pkrole => $role->role);
+			$roles[$role->pkrole] = $role->role;
+		}
+		$form = new RequestForm($roles, $projectID);
+		$request = $this->getRequest();
+		if ($request->isPost()) {
+		    	$roleID = $request->getPost()->get('role', '');
+			$comment = $request->getPost()->get('comment', '');
+		    	$demand = new Request();
+			$demand->fkuser_source = $id;
+			$demand->fkuser_destination = $this->getProjectTable()->getProject($projectID)->fkowner;
+			$demand->fkrole = $roleID;
+			echo "project id : ".$projectID;
+			$demand->fkproject = $request->getPost()->get('projectID', '');
+			$demand->comment = $comment;
+			$demand->state = 0;
+			$demand->id = 0;
+			$this->getRequestTable()->saveRequest($demand);
+			
+
+		    // Redirect to list of Users
+		    return $this->redirect()->toRoute('User');
+		}
+		return array('form' => $form, 'id' => $projectID);
+	}
+
 	public function showAction()
 	{
 		$id = (int)$this->params('id');
+		
+		$assocs = $this->getAssocUserProjectTable()->getMembersFromProjectAssoc($id);
+		
+		// fetch project members with their roles
+		$members = array();
+		foreach($assocs as $assoc)
+		{
+			$fkrole = $assoc->fkrole;
+			$fkuser = $assoc->fkuser;
+			$role = $this->getRoleTable()->getRole($fkrole);
+			$member = $this->getUserTable()->getUser($fkuser);
+			$member->role = $role;
+			array_push($members, $member);
+		}
+		
+		$project = $this->getProjectTable()->getProject($id);
+		$owner = $this->getUserTable()->getUser($project->fkowner);
+		
 		try
 		{
 			return new ViewModel(array(
-				'project' => $this->getProjectTable()->getProject($id),
+				'project' => $project,
+				'members' => $members,
+				'owner' => $owner,
 			));
 		} 
 		catch(\Exception $pokemon)
@@ -133,5 +202,41 @@ class ProjectController extends AbstractActionController
             $this->projectTable = $sm->get('Project\Model\ProjectTable');
         }
         return $this->projectTable;
+    }
+	
+	public function getRoleTable()
+    {
+        if (!$this->roleTable) {
+            $sm = $this->getServiceLocator();
+            $this->roleTable = $sm->get('Project\Model\RoleTable');
+        }
+        return $this->roleTable;
+    }
+	
+	public function getAssocUserProjectTable()
+    {
+        if (!$this->assocUserProjectTable) {
+            $sm = $this->getServiceLocator();
+            $this->assocUserProjectTable = $sm->get('Project\Model\AssocUserProjectTable');
+        }
+        return $this->assocUserProjectTable;
+    }
+	
+	public function getUserTable()
+    {
+        if (!$this->userTable) {
+            $sm = $this->getServiceLocator();
+            $this->userTable = $sm->get('User\Model\UserTable');
+        }
+        return $this->userTable;
+    }
+
+        public function getRequestTable()
+    {
+        if (!$this->requestTable) {
+            $sm = $this->getServiceLocator();
+            $this->requestTable = $sm->get('Project\Model\RequestTable');
+        }
+        return $this->requestTable;
     }
 }

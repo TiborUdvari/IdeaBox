@@ -71,7 +71,7 @@ foreach($members as $member)
 }
 ?>
 </table>
-<br /><br />
+
 <a href="/Project/join/<?php echo $project->pkproject; ?>">
 <h2>Join this project</h2>
 </a>

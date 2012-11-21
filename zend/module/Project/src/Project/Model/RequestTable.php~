@@ -1,0 +1,54 @@
+<?php
+
+namespace Project\Model;
+
+use Zend\Db\TableGateway\TableGateway;
+
+class RequestTable
+{
+    protected $tableGateway;
+
+    public function __construct(TableGateway $tableGateway)
+    {
+        $this->tableGateway = $tableGateway;
+    }
+
+    public function fetchAll()
+    {
+        $resultSet = $this->tableGateway->select();
+        return $resultSet;
+    }
+
+    public function getRequest($id)
+    {
+        $id  = (int) $id;
+        $rowset = $this->tableGateway->select(array('id' => $id));
+        $row = $rowset->current();
+        if (!$row) {
+            throw new \Exception("Could not find row $id");
+        }
+        return $row;
+    }
+
+    public function saveRequest(Request $Request)
+    {
+        $data = array(
+			'id' => '',
+			'fkuser_source' => (int)$Request->fkuser_source,
+			'fkuser_destination' => (int)$Request->fkuser_destination,
+			'fkrole' => (int)$Request->fkrole,
+			'fkproject' => (int)$Request->fkproject,
+			'comment' => $Request->comment,
+			'state' => (int)$Request->state,
+			'creationdate' => '',
+        );
+
+        $this->tableGateway->insert($data);
+    }
+
+    public function deleteRequest($id)
+    {
+        $this->tableGateway->delete(array('id' => $id));
+    }
+
+}
