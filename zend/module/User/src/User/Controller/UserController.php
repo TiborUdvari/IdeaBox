@@ -7,12 +7,71 @@ use Zend\View\Model\ViewModel;
 use Zend\Session\Container;
 use User\Model\User;
 use User\Form\LoginForm;
+use User\Form\RequestForm;
+use Project\Model\Request;
 
 class UserController extends AbstractActionController
 {
     protected $userTable;
 	protected $skillTable;
 	protected $assocUserSkillTable;
+	protected $projectTable;
+	protected $roleTable;
+	protected $requestTable;
+	
+	public function recruitAction()
+	{
+		$session = new Container('ideabox');
+		$destID = (int)$this->params('id');
+		if(!$session->offsetExists('id'))
+		{
+			// redirect to home page
+			return $this->redirect()->toRoute('Project', array( 'action' => 'home' ));
+		}
+	
+		$id = $session->offsetGet('id');
+		$rolesRaw = $this->getRoleTable()->fetchAll();
+		$roles = array();
+		foreach($rolesRaw as $role)
+		{
+			//array_push($roles, $role->pkrole => $role->role);
+			$roles[$role->pkrole] = $role->role;
+		}
+		
+		$sourceID = $session->offsetGet('id');
+		$projectsRaw = $this->getProjectTable()->fetchAll();
+		$projects = array();
+		foreach($projectsRaw as $project)
+		{
+			if($project->fkowner == $sourceID)
+			{
+				$projects[$project->pkproject] = $project->name;
+			}
+		}
+		
+		$form = new RequestForm($roles, $projects);
+		$request = $this->getRequest();
+		if ($request->isPost()) {
+		    $roleID = $request->getPost()->get('role', '');
+			$comment = $request->getPost()->get('comment', '');
+			
+		    $demand = new Request();
+			$demand->fkuser_source = $sourceID;
+			$demand->fkuser_destination = $destID;
+			$demand->fkrole = $roleID;
+			$demand->fkproject = $request->getPost()->get('project', '');
+			$demand->comment = $comment;
+			$demand->state = 0;
+			$demand->id = 0;
+			$this->getRequestTable()->saveRequest($demand);
+			
+
+		    // Redirect to list of Users
+		    return $this->redirect()->toRoute('User');
+		}
+		return array('form' => $form, 'id' => $destID);
+	}
+
 
     public function indexAction()
     {
@@ -80,29 +139,29 @@ class UserController extends AbstractActionController
         $request = $this->getRequest();
 	
         if ($request->isPost()) 
-	{
-	    $email = $request->getPost()->get('email', 'toto');
-	    $password = $request->getPost()->get('password', 'toto');
-            $ok = $this->getUserTable()->isValidLogin($email, $password);
-	    if($ok)
-	    {
-			$session = new Container('ideabox');
-			$session->offsetSet('email', $email);
-			
-			$user = $this->getUserTable()->getUserByEmail($email);
-			$id = $user->pkuser;
-			$session->offsetSet('id', $id);
-			
-			return $this->redirect()->toRoute('User', array('action' => 'myProfile'));
-        }
-	    else
-	    {
-		return $this->redirect()->toRoute('Project');
-	    }
-	}
-	return array(
-            'form' => $form,
-        );
+		{
+			$email = $request->getPost()->get('email', 'toto');
+			$password = $request->getPost()->get('password', 'toto');
+				$ok = $this->getUserTable()->isValidLogin($email, $password);
+			if($ok)
+			{
+				$session = new Container('ideabox');
+				$session->offsetSet('email', $email);
+				
+				$user = $this->getUserTable()->getUserByEmail($email);
+				$id = $user->pkuser;
+				$session->offsetSet('id', $id);
+				
+				return $this->redirect()->toRoute('User', array('action' => 'myProfile'));
+			}
+			else
+			{
+			return $this->redirect()->toRoute('Project');
+			}
+		}
+		return array(
+				'form' => $form,
+			);
     }
 
     public function editAction()
@@ -183,5 +242,32 @@ class UserController extends AbstractActionController
             $this->assocUserSkillTable = $sm->get('User\Model\AssocUserSkillTable');
         }
         return $this->assocUserSkillTable;
+    }
+	
+	public function getProjectTable()
+    {
+        if (!$this->projectTable) {
+            $sm = $this->getServiceLocator();
+            $this->projectTable = $sm->get('Project\Model\ProjectTable');
+        }
+        return $this->projectTable;
+    }
+	
+	public function getRoleTable()
+    {
+        if (!$this->roleTable) {
+            $sm = $this->getServiceLocator();
+            $this->roleTable = $sm->get('Project\Model\RoleTable');
+        }
+        return $this->roleTable;
+    }
+	
+	public function getRequestTable()
+    {
+        if (!$this->requestTable) {
+            $sm = $this->getServiceLocator();
+            $this->requestTable = $sm->get('Project\Model\RequestTable');
+        }
+        return $this->requestTable;
     }
 }
