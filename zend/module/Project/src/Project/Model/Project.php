@@ -17,6 +17,7 @@ class Project //implements InputFilterAwareInterface
 	public $image;
 	public $fkowner;
 	public $ispublic;
+	public $members;
 
     protected $inputFilter;
 
@@ -33,6 +34,7 @@ class Project //implements InputFilterAwareInterface
 		$this->image  = (isset($data['image'])) ? $data['image'] : null;
 		$this->fkowner  = (isset($data['fkowner'])) ? $data['fkowner'] : null;
 		$this->ispublic  = (isset($data['ispublic'])) ? $data['ispublic'] : null;
+		$this->members = null;
     }
 
     public function getArrayCopy()

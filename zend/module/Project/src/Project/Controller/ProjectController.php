@@ -7,10 +7,14 @@ use Zend\View\Model\ViewModel;
 use Project\Model\Project;
 use Project\Form\ProjectForm;
 use Zend\Session\Container;
+use User\Model\UserTable;
 
 class ProjectController extends AbstractActionController
 {
     protected $projectTable;
+	protected $roleTable;
+	protected $assocUserProjectTable;
+	protected $userTable;
 
     public function indexAction()
     {
@@ -22,10 +26,30 @@ class ProjectController extends AbstractActionController
 	public function showAction()
 	{
 		$id = (int)$this->params('id');
+		
+		$assocs = $this->getAssocUserProjectTable()->getMembersFromProjectAssoc($id);
+		
+		// fetch project members with their roles
+		$members = array();
+		foreach($assocs as $assoc)
+		{
+			$fkrole = $assoc->fkrole;
+			$fkuser = $assoc->fkuser;
+			$role = $this->getRoleTable()->getRole($fkrole);
+			$member = $this->getUserTable()->getUser($fkuser);
+			$member->role = $role;
+			array_push($members, $member);
+		}
+		
+		$project = $this->getProjectTable()->getProject($id);
+		$owner = $this->getUserTable()->getUser($project->fkowner);
+		
 		try
 		{
 			return new ViewModel(array(
-				'project' => $this->getProjectTable()->getProject($id),
+				'project' => $project,
+				'members' => $members,
+				'owner' => $owner,
 			));
 		} 
 		catch(\Exception $pokemon)
@@ -133,5 +157,32 @@ class ProjectController extends AbstractActionController
             $this->projectTable = $sm->get('Project\Model\ProjectTable');
         }
         return $this->projectTable;
+    }
+	
+	public function getRoleTable()
+    {
+        if (!$this->roleTable) {
+            $sm = $this->getServiceLocator();
+            $this->roleTable = $sm->get('Project\Model\RoleTable');
+        }
+        return $this->roleTable;
+    }
+	
+	public function getAssocUserProjectTable()
+    {
+        if (!$this->assocUserProjectTable) {
+            $sm = $this->getServiceLocator();
+            $this->assocUserProjectTable = $sm->get('Project\Model\AssocUserProjectTable');
+        }
+        return $this->assocUserProjectTable;
+    }
+	
+	public function getUserTable()
+    {
+        if (!$this->userTable) {
+            $sm = $this->getServiceLocator();
+            $this->userTable = $sm->get('User\Model\UserTable');
+        }
+        return $this->userTable;
     }
 }

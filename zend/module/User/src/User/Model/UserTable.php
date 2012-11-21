@@ -44,14 +44,14 @@ class UserTable
     {
         $rowset = $this->tableGateway->select(array('email' => $email));
         $row = $rowset->current();
-	if (!$row) {
-            return false;
-        }
-	$toto = $row->password;
-        if($toto == $password)
-        	return true;
-	else
-		return false;
+		if (!$row) {
+				return false;
+			}
+		$toto = $row->password;
+			if($toto == $password)
+				return true;
+		else
+			return false;
     }
 
     public function saveUser(User $User)

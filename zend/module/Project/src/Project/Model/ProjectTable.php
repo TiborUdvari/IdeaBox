@@ -27,6 +27,7 @@ class ProjectTable
         if (!$row) {
             throw new \Exception("Could not find row $pkproject");
         }
+		
         return $row;
     }
 

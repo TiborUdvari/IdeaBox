@@ -15,6 +15,7 @@ class User //implements InputFilterAwareInterface
 	public $email;
 	public $description;
 	public $password;
+	public $role;
 
     protected $inputFilter;
 
@@ -29,6 +30,7 @@ class User //implements InputFilterAwareInterface
 		$this->email  = (isset($data['email'])) ? $data['email'] : null;
 		$this->description  = (isset($data['description'])) ? $data['description'] : null;
 		$this->password  = (isset($data['password'])) ? $data['password'] : null;
+		$this->role = null;
     }
 
     public function getArrayCopy()

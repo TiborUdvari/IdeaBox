@@ -43,3 +43,31 @@ $this->headTitle($title);
 	</td>
 </tr>
 </table>
+
+<h1>Owner</h1>
+<a href="/User/show/<?php echo $owner->pkuser; ?>">
+<?php echo $owner->firstname . " " . $owner->lastname; ?>
+</a>
+<br /><br />
+
+<h1>Members</h1>
+
+<table>
+<?php
+foreach($members as $member)
+{
+?>
+<tr>
+<td>
+<?php echo $member->role->role ?>
+</td>
+<td>
+<a href="/User/show/<?php echo $member->pkuser; ?>">
+<?php echo $member->firstname . " " . $member->lastname; ?>
+</a>
+</td>
+</tr>
+<?php
+}
+?>
+</table>

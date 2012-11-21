@@ -4,6 +4,10 @@ namespace Project;
 
 use Project\Model\Project;
 use Project\Model\ProjectTable;
+use Project\Model\Role;
+use Project\Model\RoleTable;
+use Project\Model\AssocUserProject;
+use Project\Model\AssocUserProjectTable;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -37,6 +41,28 @@ class Module
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new Project());
                     return new TableGateway('project', $dbAdapter, null, $resultSetPrototype);
+                },
+				'Project\Model\RoleTable' =>  function($sm) {
+                    $tableGateway = $sm->get('RoleTableGateway');
+                    $table = new RoleTable($tableGateway);
+                    return $table;
+                },
+                'RoleTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Role());
+                    return new TableGateway('role', $dbAdapter, null, $resultSetPrototype);
+                },
+				'Project\Model\AssocUserProjectTable' =>  function($sm) {
+                    $tableGateway = $sm->get('AssocUserProjectTableGateway');
+                    $table = new AssocUserProjectTable($tableGateway);
+                    return $table;
+                },
+                'AssocUserProjectTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new AssocUserProject());
+                    return new TableGateway('assoc_user_project', $dbAdapter, null, $resultSetPrototype);
                 },
             ),
         );
