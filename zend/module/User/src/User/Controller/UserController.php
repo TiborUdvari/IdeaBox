@@ -19,6 +19,36 @@ class UserController extends AbstractActionController
 	protected $roleTable;
 	protected $requestTable;
 	
+	public function controlPanelAction()
+	{
+		$session = new Container('ideabox');
+		if(!$session->offsetExists('id'))
+		{
+			// redirect to home page
+			return $this->redirect()->toRoute('Project', array( 'action' => 'home' ));
+		}
+			
+		$userID = $session->offsetGet('id');
+		$requests = $this->getRequestTable()->fetchAll();
+		
+		$receivedRequests = array();
+		$sentRequests = array();
+		foreach($requests as $request)
+		{
+			if($request->fkuser_source == $userID)
+			{
+				array_push($sentRequests, $request);
+			}
+			
+			if($request->fkuser_destination == $userID)
+			{
+				array_push($receivedRequests, $request);
+			}
+		}
+	
+		return array('receivedRequests' => $receivedRequests, 'sentRequests' => $sentRequests);
+	}
+	
 	public function recruitAction()
 	{
 		$session = new Container('ideabox');

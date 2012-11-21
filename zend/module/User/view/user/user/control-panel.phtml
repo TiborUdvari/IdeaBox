@@ -1,0 +1,71 @@
+<?php
+$title = $this->translate('Control panel');
+$this->headTitle($title);
+?>
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+
+
+<table class="table">
+<caption>Received requests</caption>
+<th>Applicant</th>
+<th>Project</th>
+<th>Role</th>
+<th>State</th>
+<th>Accept/Decline</th>
+<?php
+foreach($receivedRequests as $request)
+{
+?>
+<tr>
+	<td>
+    <?php echo $request->fkuser_source ?>
+	</td>
+	<td>
+	<?php echo $request->fkproject; ?>
+	</td>
+	<td>
+	<?php echo $request->fkrole; ?>
+	</td>
+	<td>
+	<?php echo $request->state; ?>
+	</td>
+	<td>
+	[button1] [button2]
+	</td>
+</tr>
+<?php
+}
+?>
+</table>
+
+<table class="table">
+<caption>Sent requests</caption>
+<th>Project</th>
+<th>Role</th>
+<th>State</th>
+<th>Delete</th>
+
+<?php
+foreach($sentRequests as $request)
+{
+?>
+<tr>
+	<td>
+	<?php echo $request->fkproject; ?>
+	</td>
+	<td>
+	<?php echo $request->fkrole; ?>
+	</td>
+	<td>
+	<?php echo $request->state; ?>
+	</td>
+	<td>
+	[delete]
+	</td>
+</tr>
+<?php
+}
+?>
+</table>
