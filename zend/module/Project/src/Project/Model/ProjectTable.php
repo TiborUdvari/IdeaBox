@@ -61,7 +61,7 @@ class ProjectTable
 
     public function isProjectOwner($pkuser, $pkproject)
     {
-    	return $this->getProject($pkproject)->pkowner == $pkuser;
+    	return $this->getProject($pkproject)->fkowner == $pkuser;
     }
 
 }

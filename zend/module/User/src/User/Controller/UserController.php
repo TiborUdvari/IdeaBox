@@ -69,7 +69,7 @@ class UserController extends AbstractActionController
 		$sentRequests = array();
 		$this->getRequestTable()->fillUserRequests($userID, $receivedRequests, $sentRequests);
 	
-		return new ViewModel(array('receivedRequests' => $receivedRequests, 'sentRequests' => $sentRequests));
+		return new ViewModel(array('receivedRequests' => $receivedRequests, 'sentRequests' => $sentRequests, 'error' => $error));
 	}
 	
 	public function recruitAction()
