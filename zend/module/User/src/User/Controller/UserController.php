@@ -7,6 +7,7 @@ use Zend\View\Model\ViewModel;
 use Zend\Session\Container;
 use User\Model\User;
 use User\Form\LoginForm;
+use User\Form\RegisterForm;
 use User\Form\RequestForm;
 use Project\Model\Request;
 
@@ -18,6 +19,38 @@ class UserController extends AbstractActionController
 	protected $projectTable;
 	protected $roleTable;
 	protected $requestTable;
+	
+	public function registerAction()
+	{
+		$session = new Container('ideabox');
+		if($session->offsetExists('id'))
+		{
+			return $this->redirect()->toRoute('Project', array('action' => 'home'));
+		}
+	
+        $form = new RegisterForm();
+        $request = $this->getRequest();
+	
+		$error = "";
+        if ($request->isPost()) 
+		{
+			try
+			{
+				$user = new User();
+				$user->fill($request->getPost());
+				$this->getUserTable()->saveUser($user);
+				return $this->redirect()->toRoute('User', array('action' => 'myProfile'));
+			}
+			catch(\Exception $e)
+			{
+				$error =  $e->getMessage();
+			}
+		}
+		
+		return array(
+				'form' => $form, 'error' => $error,
+			);
+	}
 	
 	public function controlPanelAction()
 	{

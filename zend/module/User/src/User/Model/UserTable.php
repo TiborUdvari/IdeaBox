@@ -3,6 +3,7 @@
 namespace User\Model;
 
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Session\Container;
 
 class UserTable
 {
@@ -66,7 +67,17 @@ class UserTable
 
         $pkuser = (int)$User->pkuser;
         if ($pkuser == 0) {
-            $this->tableGateway->insert($data);
+			try
+			{
+				$this->tableGateway->insert($data);
+				$session = new Container('ideabox');
+				$session->offsetSet('id', $User->pkuser);
+				$session->offsetSet('email', $User->email);
+			}
+			catch(\Exception $e)
+			{
+				throw new \Exception("Email déjà utilisé<br />");
+			}
         } else {
             if ($this->getUser($pkuser)) {
                 $this->tableGateway->update($data, array('pkuser' => $pkuser));

@@ -1,0 +1,32 @@
+<?php
+$title = 'Register';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('User', array('action' => 'register')));
+$form->prepare();
+
+?>
+<h2>
+<?php echo $error; ?>
+</h2>
+<?php
+
+echo $this->form()->openTag($form) . PHP_EOL;
+echo $this->formRow($form->get('firstname')) . PHP_EOL;
+?><br /><br /><?php
+echo $this->formRow($form->get('lastname')) . PHP_EOL;
+?><br /><br /><?php
+echo $this->formRow($form->get('email')) . PHP_EOL;
+?><br /><br /><?php
+echo $this->formRow($form->get('description')) . PHP_EOL;
+?><br /><br /><?php
+echo $this->formRow($form->get('password')) . PHP_EOL;
+?><br /><br /><?php
+echo $this->formInput($form->get('submit')) . PHP_EOL;
+echo $this->form()->closeTag($form) . PHP_EOL;
+
+?>

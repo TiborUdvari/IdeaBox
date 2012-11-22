@@ -18,6 +18,44 @@ class User //implements InputFilterAwareInterface
 	public $role;
 
     protected $inputFilter;
+	
+	/**
+	 * Fills the user with the form data
+	 */
+	public function fill($request)
+	{
+		$this->firstname = $request->get('firstname', '');
+		$this->lastname = $request->get('lastname', '');
+		$this->email = $request->get('email', '');
+		$this->password = $request->get('password', '');
+		$this->description = $request->get('description', '');
+		
+		$error = "";
+		if($this->firstname == "")
+		{
+			$error .= "First name must not be empty!<br />";
+		}
+		
+		if($this->lastname == "")
+		{
+			$error .= "Last name must not be empty!<br />";
+		}
+		
+		if($this->email == "")
+		{
+			$error .= "Email must not be empty!<br />";
+		}
+		
+		if($this->password == "")
+		{
+			$error .= "Password must not be empty!<br />";
+		}
+		
+		if($error != "")
+		{
+			throw new \Exception($error);
+		}
+	}
 
     /**
      * Used by ResultSet to pass each database row to the entity
