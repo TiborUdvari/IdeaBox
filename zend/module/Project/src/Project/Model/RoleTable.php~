@@ -1,0 +1,62 @@
+<?php
+
+namespace Project\Model;
+
+use Zend\Db\TableGateway\TableGateway;
+
+class RoleTable
+{
+    protected $tableGateway;
+
+    public function __construct(TableGateway $tableGateway)
+    {
+        $this->tableGateway = $tableGateway;
+    }
+
+    public function fetchAll()
+    {
+        $resultSet = $this->tableGateway->select();
+        return $resultSet;
+    }
+
+    public function fillRoles()
+    {
+        $resultSet = $this->tableGateway->select();
+        return $resultSet;
+    }
+
+    public function getRole($pkrole)
+    {
+        $pkrole  = (int) $pkrole;
+        $rowset = $this->tableGateway->select(array('pkrole' => $pkrole));
+        $row = $rowset->current();
+        if (!$row) {
+            throw new \Exception("Could not find row $pkrole");
+        }
+        return $row;
+    }
+
+    public function saveRole(Role $Role)
+    {
+        $data = array(
+			'role' => $Role->role,
+        );
+
+        $pkrole = (int)$Project->pkrole;
+        if ($pkrole == 0) {
+            $this->tableGateway->insert($data);
+        } else {
+            if ($this->getProject($pkrole)) {
+                $this->tableGateway->update($data, array('pkrole' => $pkrole));
+            } else {
+                throw new \Exception('Form pkrole does not exist');
+            }
+        }
+    }
+
+    public function deleteRole($pkrole)
+    {
+        $this->tableGateway->delete(array('pkrole' => $pkrole));
+    }
+
+}

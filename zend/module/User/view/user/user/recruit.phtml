@@ -1,20 +1,17 @@
 <?php
-$title = 'Login';
+$title = 'Recruit';
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
 <?php
 $form = $this->form;
-$form->setAttribute('action', $this->url('User', array('action' => 'login')));
+$form->setAttribute('action', $this->url('User', array('action' => 'recruit', 'id' => $id)));
 $form->prepare();
 
 echo $this->form()->openTag($form) . PHP_EOL;
-echo $this->formRow($form->get('email')) . PHP_EOL;
-echo $this->formRow($form->get('password')) . PHP_EOL;
+echo $this->formSelect($form->get('project')) . PHP_EOL;
+echo $this->formSelect($form->get('role')) . PHP_EOL;
+echo $this->formRow($form->get('comment')) . PHP_EOL;
 echo $this->formInput($form->get('submit')) . PHP_EOL;
 echo $this->form()->closeTag($form) . PHP_EOL;
-
-?>
-
-Don't have an account? <a href="/User/register">Register</a>.

@@ -43,8 +43,8 @@ class AssocUserProjectTable
     public function saveAssocUserProject($assocUserProject)
     {
 	$data = array(
-			'fkuser' => (int)$assocUserProject->fkuser,
-			'fkproject' => (int)$assocUserProject->fkproject,
+			'fkuser' => (int)$assocUserProject->fkuser_source,
+			'fkproject' => (int)$assocUserProject->fkuser_destination,
 			'fkrole' => (int)$assocUserProject->fkrole,
         );
 

@@ -19,6 +19,14 @@ class RequestTable
         return $resultSet;
     }
 
+    public function fillUserRequests($userID, &$receivedRequests, &$sentRequests)
+    {
+        $resultSet = $this->tableGateway->select(array('fkuser_source' => $userID));
+        $sentRequests = $resultSet;
+	$resultSet = $this->tableGateway->select(array('fkuser_destination' => $userID));
+        $receivedRequests = $resultSet;
+    }
+
     public function getRequest($id)
     {
         $id  = (int) $id;
@@ -33,17 +41,20 @@ class RequestTable
     public function saveRequest(Request $Request)
     {
         $data = array(
-			'id' => '',
 			'fkuser_source' => (int)$Request->fkuser_source,
 			'fkuser_destination' => (int)$Request->fkuser_destination,
 			'fkrole' => (int)$Request->fkrole,
 			'fkproject' => (int)$Request->fkproject,
 			'comment' => $Request->comment,
 			'state' => (int)$Request->state,
-			'creationdate' => '',
         );
 
         $this->tableGateway->insert($data);
+    }
+    
+    public function updateState($requestID, $newState)
+    {
+	$this->tableGateway->update(array('state' => $newState), array('id' => $requestID));
     }
 
     public function deleteRequest($id)

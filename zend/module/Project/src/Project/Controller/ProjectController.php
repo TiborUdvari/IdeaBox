@@ -45,7 +45,7 @@ class ProjectController extends AbstractActionController
 			//array_push($roles, $role->pkrole => $role->role);
 			$roles[$role->pkrole] = $role->role;
 		}
-		$form = new RequestForm($roles, $projectID);
+		$form = new RequestForm($roles);
 		$request = $this->getRequest();
 		if ($request->isPost()) {
 		    	$roleID = $request->getPost()->get('role', '');
