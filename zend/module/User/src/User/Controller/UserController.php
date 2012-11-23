@@ -12,6 +12,8 @@ use User\Form\RequestForm;
 use Project\Model\Request;
 use Project\Model\AssocUserProject;
 use Project\Model\AssocUserProjectTable;
+use User\Form\SkillForm;
+use User\Model\AssocUserSkill;
 
 class UserController extends AbstractActionController
 {
@@ -22,6 +24,46 @@ class UserController extends AbstractActionController
 	protected $projectTable;
 	protected $roleTable;
 	protected $requestTable;
+	
+	public function editSkillsAction()
+	{
+		$session = new Container('ideabox');
+		if(!$session->offsetExists('id'))
+		{
+			return $this->redirect()->toRoute('Project', array('action' => 'home'));
+		}
+		
+		$request = $this->getRequest();
+		$skillsRaw = $this->getSkillTable()->fetchAll();
+		$skills = array();
+		foreach($skillsRaw as $skill)
+		{
+			$skills[$skill->pkskill] = $skill->name;
+		}
+		
+		$form = new SkillForm($skills);
+		
+		$error = "";
+        if ($request->isPost())
+		{
+			try
+			{
+				$assocUserSkill = new AssocUserSkill();
+				$assocUserSkill->fill($request->getPost(), $session->offsetGet('id'));
+				$this->getAssocUserSkillTable()->saveAssocUserSkill($assocUserSkill);
+				return $this->redirect()->toRoute('User', array('action' => 'myProfile'));
+			}
+			catch(\Exception $e)
+			{
+				$error =  $e->getMessage();
+			}
+		}
+			
+		$ret =  new ViewModel(array(
+				'form' => $form, 'error' => $error,
+			));
+		return $ret;
+	}
 	
 	public function registerAction()
 	{
@@ -141,10 +183,22 @@ class UserController extends AbstractActionController
 			// redirect to home page
 			return $this->redirect()->toRoute('Project', array( 'action' => 'home' ));
 		}
+		
+		$assocUserSkills = $this->getAssocUserSkillTable()->getAssocSkills($session->offsetGet('id'));
+		
+		$userSkills = array();
+		
+		foreach($assocUserSkills as $assocUserSkill)
+		{
+			$skill = $this->getSkillTable()->getSkill($assocUserSkill->fkskill);
+			$skill->level = $assocUserSkill->level;
+			$skill->description = $assocUserSkill->description;
+			array_push($userSkills, $skill);
+		}
 	
 		$email = $session->offsetGet('email');
 		return new ViewModel(array(
-            'user' => $this->getUserTable()->getUserByEmail($email),
+            'user' => $this->getUserTable()->getUserByEmail($email), 'skills' => $userSkills,
         ));
 	}
 	

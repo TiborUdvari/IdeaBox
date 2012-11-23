@@ -15,6 +15,35 @@ class AssocUserSkill //implements InputFilterAwareInterface
 	public $description;
 
     protected $inputFilter;
+	
+	/**
+	 * Fills the assoc with the form data
+	 */
+	public function fill($request, $id)
+	{
+		$this->fkuser = $id;
+		$this->fkskill = $request->get('skills', '');
+		$this->level = $request->get('level', '');
+		$this->description = $request->get('description', '');
+		
+		$error = "";
+		
+		if($this->fkskill == "")
+		{
+			$error .= "Skill id must not be empty!<br />";
+		}
+		
+		if($this->level < 0 || $this->level > 100)
+		{
+			$error .= "Invalid skill level!<br />";
+		}
+		
+		
+		if($error != "")
+		{
+			throw new \Exception($error);
+		}
+	}
 
     /**
      * Used by ResultSet to pass each database row to the entity
