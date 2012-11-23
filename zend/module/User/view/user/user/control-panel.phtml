@@ -48,7 +48,6 @@ foreach($receivedRequests as $request)
 <th>Project</th>
 <th>Role</th>
 <th>State</th>
-<th>Delete</th>
 
 <?php
 foreach($sentRequests as $request)
@@ -63,9 +62,6 @@ foreach($sentRequests as $request)
 	</td>
 	<td>
 	<?php echo $request->state; ?>
-	</td>
-	<td>
-	[delete]
 	</td>
 </tr>
 <?php
