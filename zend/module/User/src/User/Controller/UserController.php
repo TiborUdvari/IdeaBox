@@ -84,6 +84,10 @@ class UserController extends AbstractActionController
 				$user = new User();
 				$user->fill($request->getPost());
 				$this->getUserTable()->saveUser($user);
+				$id = $this->getUserTable()->getUserByEmail($user->email)->pkuser;
+				$session->offsetSet('id', $id);
+				$session->offsetSet('email', $user->email);
+				
 				return $this->redirect()->toRoute('User', array('action' => 'myProfile'));
 			}
 			catch(\Exception $e)
