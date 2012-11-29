@@ -19,14 +19,6 @@ class RequestTable
         return $resultSet;
     }
 
-    public function fillUserRequests($userID, &$receivedRequests, &$sentRequests)
-    {
-        $resultSet = $this->tableGateway->select(array('fkuser_source' => $userID));
-        $sentRequests = $resultSet;
-	$resultSet = $this->tableGateway->select(array('fkuser_destination' => $userID));
-        $receivedRequests = $resultSet;
-    }
-
     public function getRequest($id)
     {
         $id  = (int) $id;

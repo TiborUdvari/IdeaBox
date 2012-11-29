@@ -12,7 +12,6 @@ $this->headTitle($title);
 <th>Applicant</th>
 <th>Project</th>
 <th>Role</th>
-<th>State</th>
 <th>Accept/Decline</th>
 <?php
 foreach($receivedRequests as $request)
@@ -20,16 +19,13 @@ foreach($receivedRequests as $request)
 ?>
 <tr>
 	<td>
-    <?php echo $request->fkuser_source ?>
+    <?php echo $request->destination_firstname. " " . $request->destination_lastname ?>
 	</td>
 	<td>
-	<?php echo $request->fkproject; ?>
+	<?php echo $request->name; ?>
 	</td>
 	<td>
-	<?php echo $request->fkrole; ?>
-	</td>
-	<td>
-	<?php echo $request->state; ?>
+	<?php echo $request->role; ?>
 	</td>
 	<td>
 	<?php if($request->state == 0) {?>
@@ -55,13 +51,26 @@ foreach($sentRequests as $request)
 ?>
 <tr>
 	<td>
-	<?php echo $request->fkproject; ?>
+	<?php echo $request->name; ?>
 	</td>
 	<td>
-	<?php echo $request->fkrole; ?>
+	<?php echo $request->role; ?>
 	</td>
 	<td>
-	<?php echo $request->state; ?>
+	<?php
+		switch($request->state)
+		{
+			case 0:
+				echo "Pending";
+				break;
+			case 1:
+				echo "Accepted";
+				break;
+			case 2:
+				echo "Declined";
+				break;
+		}
+	?>
 	</td>
 </tr>
 <?php

@@ -24,6 +24,7 @@ class UserController extends AbstractActionController
 	protected $projectTable;
 	protected $roleTable;
 	protected $requestTable;
+	protected $requestViewTable;
 	
 	public function editSkillsAction()
 	{
@@ -113,7 +114,7 @@ class UserController extends AbstractActionController
 		$userID = $session->offsetGet('id');
 		$receivedRequests = array();
 		$sentRequests = array();
-		$this->getRequestTable()->fillUserRequests($userID, $receivedRequests, $sentRequests);
+		$this->getRequestViewTable()->fillUserRequests($userID, $receivedRequests, $sentRequests);
 	
 		return new ViewModel(array('receivedRequests' => $receivedRequests, 'sentRequests' => $sentRequests, 'error' => $error));
 	}
@@ -419,6 +420,15 @@ class UserController extends AbstractActionController
             $this->requestTable = $sm->get('Project\Model\RequestTable');
         }
         return $this->requestTable;
+    }
+	
+	public function getRequestViewTable()
+    {
+        if (!$this->requestViewTable) {
+            $sm = $this->getServiceLocator();
+            $this->requestViewTable = $sm->get('Project\Model\RequestViewTable');
+        }
+        return $this->requestViewTable;
     }
 
 	public function getAssocUserProjectTable()

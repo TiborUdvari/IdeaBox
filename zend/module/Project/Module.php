@@ -10,6 +10,8 @@ use Project\Model\AssocUserProject;
 use Project\Model\AssocUserProjectTable;
 use Project\Model\Request;
 use Project\Model\RequestTable;
+use Project\Model\RequestView;
+use Project\Model\RequestViewTable;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -76,6 +78,17 @@ class Module
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new Request());
                     return new TableGateway('request', $dbAdapter, null, $resultSetPrototype);
+                },
+				'Project\Model\RequestViewTable' =>  function($sm) {
+                    $tableGateway = $sm->get('RequestViewTableGateway');
+                    $table = new RequestViewTable($tableGateway);
+                    return $table;
+                },
+                'RequestViewTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new RequestView());
+                    return new TableGateway('request_view', $dbAdapter, null, $resultSetPrototype);
                 },
             ),
         );
