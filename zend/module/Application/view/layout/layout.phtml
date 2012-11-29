@@ -1,5 +1,8 @@
 <?php
 use Zend\Session\Container;
+
+$session = new Container('ideabox');
+$isLoggedIn = $session->offsetExists('email');
 ?>
 <!DOCTYPE html>
 <html>
@@ -18,16 +21,11 @@ use Zend\Session\Container;
 							<img id="logo" src="/images/logo.png" alt="logo">
 							</a>
 						</li>
+						<?php if($isLoggedIn): ?>
 						<li>
 							<a href="/Project/add">
 							New project
 							</a>
-						</li>
-						<li>
-							<a href="/Project">Projects</a>
-						</li>
-						<li>
-							<a href="/User">People</a>
 						</li>
 						<li>
 							<a href="/User/controlPanel">
@@ -39,17 +37,19 @@ use Zend\Session\Container;
 							My profile
 							</a>
 						</li>
+						<?php endif; ?>
 						<li>
-							<?php
-							$session = new Container('ideabox');
-							if($session->offsetExists('email'))
-							{
-						          //echo 'Logged in as '.$session->offsetGet('email');
-							  ?><a href="/User/logout">Logout</a><?php
-							}
-							else
-							{?>
-								<a href="/User/login">Login</a><?php } ?>
+							<a href="/Project">Projects</a>
+						</li>
+						<li>
+							<a href="/User">People</a>
+						</li>
+						<li>
+						<?php if($isLoggedIn) { ?>
+							<a href="/User/logout">Logout</a>
+						<?php } else {?>
+							<a href="/User/login">Login</a>
+						<?php } ?>
 						</li>
 					</ul>
 				</nav>
