@@ -12,6 +12,7 @@ $this->headTitle($title);
 <th>Applicant</th>
 <th>Project</th>
 <th>Role</th>
+<th>Comment</th>
 <th>Accept/Decline</th>
 <?php
 foreach($receivedRequests as $request)
@@ -26,6 +27,9 @@ foreach($receivedRequests as $request)
 	</td>
 	<td>
 	<?php echo $request->role; ?>
+	</td>
+	<td>
+	<?php echo $request->comment ?>
 	</td>
 	<td>
 	<?php if($request->state == 0) {?>

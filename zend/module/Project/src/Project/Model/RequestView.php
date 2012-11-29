@@ -19,6 +19,7 @@ class RequestView //implements InputFilterAwareInterface
     public $destination_lastname;
     public $role;
     public $name;
+    public $comment;
 	
     protected $inputFilter;
 	
@@ -27,6 +28,7 @@ class RequestView //implements InputFilterAwareInterface
      */
     public function exchangeArray($data)
     {
+		$this->comment     = (isset($data['comment'])) ? $data['comment'] : null;
 		$this->id     = (isset($data['id'])) ? $data['id'] : null;
 		$this->state     = (isset($data['state'])) ? $data['state'] : null;
 		$this->fkuser_source     = (isset($data['fkuser_source'])) ? $data['fkuser_source'] : null;
