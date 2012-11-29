@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le : Jeu 29 Novembre 2012 à 16:50
+-- Généré le : Jeu 29 Novembre 2012 à 16:59
 -- Version du serveur: 5.5.27
 -- Version de PHP: 5.3.8
 
@@ -163,6 +163,7 @@ INSERT INTO `request` (`id`, `fkuser_source`, `fkuser_destination`, `fkrole`, `f
 --
 CREATE TABLE IF NOT EXISTS `request_view` (
 `id` int(11)
+,`comment` text
 ,`fkuser_source` int(11)
 ,`fkuser_destination` int(11)
 ,`state` int(11)
@@ -267,7 +268,7 @@ INSERT INTO `user` (`pkuser`, `firstname`, `lastname`, `email`, `description`, `
 --
 DROP TABLE IF EXISTS `request_view`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `request_view` AS select `request`.`id` AS `id`,`request`.`fkuser_source` AS `fkuser_source`,`request`.`fkuser_destination` AS `fkuser_destination`,`request`.`state` AS `state`,`user1`.`firstname` AS `source_firstname`,`user1`.`lastname` AS `source_lastname`,`user2`.`firstname` AS `destination_firstname`,`user2`.`lastname` AS `destination_lastname`,`role`.`role` AS `role`,`project`.`name` AS `name` from ((((`user` `user1` join `user` `user2`) join `role`) join `project`) join `request`) where ((`user1`.`pkuser` = `request`.`fkuser_source`) and (`user2`.`pkuser` = `request`.`fkuser_destination`) and (`role`.`pkrole` = `request`.`fkrole`) and (`project`.`pkproject` = `request`.`fkproject`));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `request_view` AS select `request`.`id` AS `id`,`request`.`comment` AS `comment`,`request`.`fkuser_source` AS `fkuser_source`,`request`.`fkuser_destination` AS `fkuser_destination`,`request`.`state` AS `state`,`user1`.`firstname` AS `source_firstname`,`user1`.`lastname` AS `source_lastname`,`user2`.`firstname` AS `destination_firstname`,`user2`.`lastname` AS `destination_lastname`,`role`.`role` AS `role`,`project`.`name` AS `name` from ((((`user` `user1` join `user` `user2`) join `role`) join `project`) join `request`) where ((`user1`.`pkuser` = `request`.`fkuser_source`) and (`user2`.`pkuser` = `request`.`fkuser_destination`) and (`role`.`pkrole` = `request`.`fkrole`) and (`project`.`pkproject` = `request`.`fkproject`));
 
 --
 -- Contraintes pour les tables exportées
