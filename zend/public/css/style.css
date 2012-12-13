@@ -50,8 +50,11 @@ nav {
 	max-width: 1000px;
 	background-color: #c0c0c0;
 	width: 80%;
-	height: 680px;
+	height: 700px;
 	margin: 0 auto 0 auto;
+	-moz-box-shadow: 6px 6px 5px #aaa;
+	-webkit-box-shadow: 6px 6px 5px #aaa;
+	box-shadow: 6px 6px 5px #aaa;
 }
 
 #logo {
@@ -66,14 +69,12 @@ nav ul li {
 #welcomeImagePlaceholder {
 	width: 40%;
 	height: 150px;
-	background-color: green;
 	float: left;
 }
 
 #welcomePresentation {
 	width: 60%;
 	height: 150px;
-	background-color: red;
 	float: left;
 }
 
@@ -151,6 +152,5 @@ h3 {
 
 footer {
 	height: 2em;
-	background-color: blue;
 	display: block;
 }
