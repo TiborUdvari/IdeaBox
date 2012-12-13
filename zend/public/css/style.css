@@ -73,9 +73,9 @@ nav ul li {
 }
 
 #welcomePresentation {
-	width: 60%;
+	width: 40%;
 	height: 150px;
-	float: left;
+	float: right;
 }
 
 #content {
