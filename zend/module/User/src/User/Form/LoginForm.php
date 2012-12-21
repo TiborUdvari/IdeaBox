@@ -15,26 +15,24 @@ class LoginForm extends Form
             'name' => 'email',
             'attributes' => array(
                 'type'  => 'text',
+                'placeholder' => 'yourname@yourdomain.ch',
             ),
-            'options' => array(
-                'label' => 'email',
-            ),
+            
         ));
 
         $this->add(array(
             'name' => 'password',
             'attributes' => array(
-                'type'  => 'password',
-            ),
-            'options' => array(
-                'label' => 'password',
+                'type'  => 'Password',
+                'placeholder' => 'shhh'
             ),
         ));
 
 	$this->add(array(
             'name' => 'submit',
             'attributes' => array(
-                'value'  => 'login',
+                'value'  => 'Login',
+                'class' => 'btn btn-success',
 		'type' 	=> 'submit',
             ),
         ));

@@ -44,9 +44,11 @@ class RequestForm extends Form
             'name' => 'submit',
             'attributes' => array(
                 'type'  => 'submit',
-                'value' => 'Envoyer la demande',
+                'value' => 'Send out',
                 'id' => 'submitbutton',
+                'class' => 'btn btn-success',
             ),
+            
         ));
 
     }

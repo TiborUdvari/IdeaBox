@@ -14,7 +14,7 @@
 return array(
     'db' => array(
         'driver' => 'Pdo',
-        'dsn'            => 'mysql:dbname=ideabox;hostname=localhost',
+        'dsn'            => 'mysql:dbname=ideabox;hostname=localhost/',
         'username'       => 'ideabox',
         'password'       => 'ideabox',
         'driver_options' => array(

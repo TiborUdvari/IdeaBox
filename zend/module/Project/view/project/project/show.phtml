@@ -2,76 +2,55 @@
 $title = $this->translate('Project profile');
 $this->headTitle($title);
 ?>
-<h1><?php echo $this->escapeHtml($title); ?></h1>
 
-<table class="table">
-<tr>
-	<td>
-    <?php echo $this->translate('Name'); ?>
-	</td>
-	<td>
-	<?php echo $project->name; ?>
-	</td>
-</tr>
-<tr>
-	<td>
-	<?php echo $this->translate('Creation date'); ?>
-	</td>
-	<td>
-	<?php echo $project->creationdate; ?>
-	</td>
-</tr>
-<tr>
-	<td>
-	<?php echo $this->translate('Short description'); ?>
-	</td>
-	<td>
-	<?php echo $project->short_description; ?>
-	</td>
-</tr>
-<tr>
-	<td>
-	<?php echo $this->translate('Long description'); ?>
-	</td>
-	<td>
-	<?php echo $project->long_description; ?>
-	</td>
-</tr>
-<tr>
-	<td colspan="2">
-	<img src="<?php echo $project->image; ?>" />
-	</td>
-</tr>
-</table>
 
-<h1>Owner</h1>
-<a href="/User/show/<?php echo $owner->pkuser; ?>">
-<?php echo $owner->firstname . " " . $owner->lastname; ?>
-</a>
-<br /><br />
+<div class = "container">
+	<div class = "row" id = "userHead">
+		<div class = "span4 offset1">
+			<img src="<?php echo $project->image; ?>" alt = "user">
+		</div>
 
-<h1>Members</h1>
+		<div class = "span4 ">
+			<h2><?php echo $project->name; ?></h2>
+			
+			<p>Posted by <a href="/User/show/<?php echo $owner->pkuser; ?>">
+				<?php echo $owner->firstname . " " . $owner->lastname; ?>
+			</a></p>
+			<p><?php echo $project->short_description; ?></p>
+			<p>Created at : <?php echo $project->creationdate; ?></p>
+			<hr>
+			<a href="/Project/join/<?php echo $project->pkproject; ?>" class = "btn btn-success btn-large"> Join Project!</a>
 
-<table>
-<?php
-foreach($members as $member)
-{
-?>
-<tr>
-<td>
-<?php echo $member->role->role ?>
-</td>
-<td>
-<a href="/User/show/<?php echo $member->pkuser; ?>">
-<?php echo $member->firstname . " " . $member->lastname; ?>
-</a>
-</td>
-</tr>
-<?php
-}
-?>
-</table>
-<br /><br />
-<a href="/Project/join/<?php echo $project->pkproject; ?>">
-<h2>Join this project</h2>
-</a>
+
+		</div>
+
+	</div>
+	<div class = "row">
+		<div class = "span8 offset1">
+			<hr>
+		</div>
+
+	</div>
+	<div class = "row">
+		<div class = "span4 offset1">
+			<h3>Description</h3>
+			<p>Long description</p>
+		</div>
+		<div class = "span4 ">
+			<h3>Members</h3>
+			
+			<?php
+			foreach($members as $member)
+			{
+				?>
+				<p><?php echo $member->role->role ?> : <a href="/User/show/<?php echo $member->pkuser; ?>"><?php echo $member->firstname . " " . $member->lastname; ?></a></p>
+				<?php
+			}
+			?>
+
+		</div>
+	</div>
+
+
+	<hr>
+

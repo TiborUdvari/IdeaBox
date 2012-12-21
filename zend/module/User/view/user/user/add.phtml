@@ -2,12 +2,41 @@
 $title = 'Add new album';
 $this->headTitle($title);
 ?>
-<h1><?php echo $this->escapeHtml($title); ?></h1>
 
-<?php
-$form = $this->form;
-$form->setAttribute('action', $this->url('album', array('action' => 'add')));
-$form->prepare();
+<div class = "container">
+	<div class = "row">
+		<div class = "row">
+			<div class = "span3 ">
+				<?php
+				$form = $this->form;
+				$form->setAttribute('action', $this->url('album', array('action' => 'add')));
+				$form->prepare();
+				?>
+
+				<?php echo $this->form()->openTag($form) . PHP_EOL; ?>
+
+				<fieldset>
+					<legend><?php echo $this->escapeHtml($title); ?></legend>
+					<label>E-mail</label>
+					<?php echo $this->formRow($form->get('email')) . PHP_EOL; ?>
+
+					<label>Password</label>
+					<?php echo $this->formRow($form->get('password')) . PHP_EOL; ?>
+
+					<hr>
+					<?php echo $this->formInput($form->get('submit')) . PHP_EOL; ?>
+
+				</fieldset>
+				<br>
+				<p>Don't have an account yet ? <a href = "/User/register" class="btn-small btn-warning">Register Now</a></p>
+				<?php echo $this->form()->closeTag($form) . PHP_EOL; ?>
+		</div>
+
+	</div>
+
+	<hr>
+
+
 
 echo $this->form()->openTag($form) . PHP_EOL;
 echo $this->formHidden($form->get('id')) . PHP_EOL;

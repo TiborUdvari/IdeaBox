@@ -3,81 +3,96 @@ $title = $this->translate('Control panel');
 $this->headTitle($title);
 ?>
 
-<h1><?php echo $this->escapeHtml($title); ?></h1>
 
-<h2><?php echo $error; ?></h2>
 
-<table class="table">
-<caption>Received requests</caption>
-<th>Applicant</th>
-<th>Project</th>
-<th>Role</th>
-<th>Comment</th>
-<th>Accept/Decline</th>
-<?php
-foreach($receivedRequests as $request)
-{
-?>
-<tr>
-	<td>
-    <?php echo $request->destination_firstname. " " . $request->destination_lastname ?>
-	</td>
-	<td>
-	<?php echo $request->name; ?>
-	</td>
-	<td>
-	<?php echo $request->role; ?>
-	</td>
-	<td>
-	<?php echo $request->comment ?>
-	</td>
-	<td>
-	<?php if($request->state == 0) {?>
-	<a href="/User/acceptRequest/<?php echo $request->id; ?>">[Accept]</a>
-	<a href="/User/declineRequest/<?php echo $request->id; ?>">[Decline]</a>
-	<?php }?>
-	</td>
-</tr>
-<?php
-}
-?>
-</table>
+<div class = "container">
+	<div class = "row">
+		<div class = "span12">
+			<h1><?php echo $this->escapeHtml($title); ?></h1>
 
-<table class="table">
-<caption>Sent requests</caption>
-<th>Project</th>
-<th>Role</th>
-<th>State</th>
+			<h2><?php echo $error; ?></h2>
+			<table class="table">
+				<caption>Received requests</caption>
+				<th>Applicant</th>
+				<th>Project</th>
+				<th>Role</th>
+				<th>Comment</th>
+				<th>Accept/Decline</th>
+				<?php
+				foreach($receivedRequests as $request)
+				{
+					?>
+					<tr>
+						<td>
+							<?php echo $request->destination_firstname. " " . $request->destination_lastname ?>
+						</td>
+						<td>
+							<?php echo $request->name; ?>
+						</td>
+						<td>
+							<?php echo $request->role; ?>
+						</td>
+						<td>
+							<?php echo $request->comment ?>
+						</td>
+						<td>
+							<?php if($request->state == 0) {?>
+							<a href="/User/acceptRequest/<?php echo $request->id; ?>">[Accept]</a>
+							<a href="/User/declineRequest/<?php echo $request->id; ?>">[Decline]</a>
+							<?php }?>
+						</td>
+					</tr>
+					<?php
+				}
+				?>
+			</table>
 
-<?php
-foreach($sentRequests as $request)
-{
-?>
-<tr>
-	<td>
-	<?php echo $request->name; ?>
-	</td>
-	<td>
-	<?php echo $request->role; ?>
-	</td>
-	<td>
-	<?php
-		switch($request->state)
-		{
-			case 0:
-				echo "Pending";
-				break;
-			case 1:
-				echo "Accepted";
-				break;
-			case 2:
-				echo "Declined";
-				break;
-		}
-	?>
-	</td>
-</tr>
-<?php
-}
-?>
-</table>
+			<table class="table">
+				<caption>Sent requests</caption>
+				<th>Project</th>
+				<th>Role</th>
+				<th>State</th>
+
+				<?php
+				foreach($sentRequests as $request)
+				{
+					?>
+					<tr>
+						<td>
+							<?php echo $request->name; ?>
+						</td>
+						<td>
+							<?php echo $request->role; ?>
+						</td>
+						<td>
+							<?php
+							switch($request->state)
+							{
+								case 0:
+								echo "Pending";
+								break;
+								case 1:
+								echo "Accepted";
+								break;
+								case 2:
+								echo "Declined";
+								break;
+							}
+							?>
+						</td>
+					</tr>
+					<?php
+				}
+				?>
+			</table>
+
+
+
+		</div>
+	</div>
+
+	<hr>
+
+
+
+

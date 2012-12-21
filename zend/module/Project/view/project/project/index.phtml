@@ -1,23 +1,56 @@
 <?php
-$title = $this->translate('My projects');
+$title = $this->translate('Ideas');
 $this->headTitle($title);
 ?>
-<h1><?php echo $this->escapeHtml($title); ?></h1>
+           <div class = "container">
 
-<table class="table">
-<tr>
-    <th><?php echo $this->translate('Name'); ?></th>
-    <th><?php echo $this->translate('Short description'); ?></th>
-    <th>&nbsp;</th>
-</tr>
-<?php foreach($projects as $project) : ?>
-<tr>
-    <td>
-	<a href="/Project/show/<?php echo $project->pkproject; ?>">
+              <div class = "row">
+                <div class = "span12">
+
+                  <h2><?php echo $this->escapeHtml($title); ?></h2>
+                  <p>Find some public projects.</p>
+                </div>
+              </div>
+
+              <div class = "row">
+                <span class = "span12">
+
+                  <table class = "table table-striped">
+                  <thead>
+                    <tr>
+                      <th><?php echo $this->translate('Name'); ?></th>
+                      <th><?php echo $this->translate('Short description'); ?></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  	<?php foreach($projects as $project) : ?>
+					<tr>
+   						 
+				<td><a href="/Project/show/<?php echo $project->pkproject; ?>">
 	<?php echo $this->escapeHtml($project->name);?>
 	</a>
 	</td>
     <td><?php echo $this->escapeHtml($project->short_description);?></td>
 </tr>
 <?php endforeach; ?>
-</table>
+<!--
+                    <tr>
+                      <td><a href="#">Moon landing</a></td>
+                      <td>Send a man to the moon</td>
+                    </tr>
+                    <tr>
+                      <td><a href="#">Solar panels</a></td>
+                      <td>Make solar panels for every house</td>
+                    </tr>
+-->
+
+
+
+                  </tbody>
+                  </table>
+                </span>
+              </div>
+
+            <hr>
+
+

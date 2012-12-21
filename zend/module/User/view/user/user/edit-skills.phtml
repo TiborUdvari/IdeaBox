@@ -2,18 +2,38 @@
 $title = 'Edit skills';
 $this->headTitle($title);
 ?>
-<h1><?php echo $this->escapeHtml($title); ?></h1>
 
-<h2><?php echo $error; ?></h2>
 
+<div class = "container">
+	<div class = "row">
+		<div class = "row">
+			<div class = "span3">
 <?php
 $form = $this->form;
 $form->setAttribute('action', $this->url('User', array('action' => 'editSkills')));
 $form->prepare();
 
-echo $this->form()->openTag($form) . PHP_EOL;
-echo $this->formSelect($form->get('skills')) . PHP_EOL;
-echo $this->formRow($form->get('level')) . PHP_EOL;
-echo $this->formRow($form->get('description')) . PHP_EOL;
-echo $this->formInput($form->get('submit')) . PHP_EOL;
-echo $this->form()->closeTag($form) . PHP_EOL;
+				?>
+				<?php echo $this->form()->openTag($form) . PHP_EOL; ?>
+				<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<h2><?php echo $error; ?></h2>
+				<fieldset>
+					<legend><?php echo $this->escapeHtml($title); ?></legend>
+					<?php echo $this->formSelect($form->get('skills')) . PHP_EOL;  ?>
+<?php echo $this->formRow($form->get('level')) . PHP_EOL;?>
+<?php echo $this->formRow($form->get('description')) . PHP_EOL; ?>
+
+					<hr>
+					<?php echo $this->formInput($form->get('submit')) . PHP_EOL; ?>
+
+				</fieldset>
+
+				<?php echo $this->form()->closeTag($form) . PHP_EOL; ?>
+		</div>
+	</div>
+
+	<hr>
+
+
+

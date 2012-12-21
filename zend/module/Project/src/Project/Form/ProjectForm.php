@@ -18,7 +18,7 @@ class ProjectForm extends Form
                 'type'  => 'text',
             ),
             'options' => array(
-                'label' => 'Name',
+                'label' => 'Project Name',
             ),
         ));
 
@@ -56,6 +56,7 @@ class ProjectForm extends Form
             'name' => 'ispublic',
             'attributes' => array(
                 'type'  => 'checkbox',
+                'hidden' => 'true',
             ),
             'options' => array(
                 'label' => 'Public',
@@ -65,10 +66,11 @@ class ProjectForm extends Form
         $this->add(array(
             'name' => 'submit',
             'attributes' => array(
-                'type'  => 'submit',
                 'value' => 'Go',
+                'type'  => 'submit',
                 'id' => 'submitbutton',
             ),
+
         ));
 
     }

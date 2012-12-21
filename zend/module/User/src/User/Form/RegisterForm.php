@@ -15,6 +15,7 @@ class RegisterForm extends Form
             'name' => 'firstname',
             'attributes' => array(
                 'type'  => 'text',
+                'placeholder' => 'John',
             ),
             'options' => array(
                 'label' => 'First Name',
@@ -25,6 +26,7 @@ class RegisterForm extends Form
             'name' => 'lastname',
             'attributes' => array(
                 'type'  => 'text',
+                'placeholder' => 'Smith',
             ),
             'options' => array(
                 'label' => 'Last Name',
@@ -34,17 +36,18 @@ class RegisterForm extends Form
         $this->add(array(
             'name' => 'email',
             'attributes' => array(
-                'type'  => 'text',
+                'type'  => 'email',
+                'placeholder' => 'you@yourdomain.ch',
             ),
             'options' => array(
-                'label' => 'Email',
+                'label' => 'E-mail address',
             ),
         ));
 		
 		$this->add(array(
             'name' => 'description',
             'attributes' => array(
-                'type'  => 'text',
+                'type'  => 'textarea',
             ),
             'options' => array(
                 'label' => 'Description',
@@ -55,6 +58,7 @@ class RegisterForm extends Form
             'name' => 'password',
             'attributes' => array(
                 'type'  => 'password',
+                'placeholder' => 'Do not worry, we will not tell',
             ),
             'options' => array(
                 'label' => 'Password',
@@ -64,7 +68,8 @@ class RegisterForm extends Form
 	$this->add(array(
             'name' => 'submit',
             'attributes' => array(
-                'value'  => 'login',
+                'value'  => 'Register',
+                'class' => 'btn btn-success',
 		'type' 	=> 'submit',
             ),
         ));

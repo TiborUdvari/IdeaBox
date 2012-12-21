@@ -2,31 +2,55 @@
 $title = 'Register';
 $this->headTitle($title);
 ?>
-<h1><?php echo $this->escapeHtml($title); ?></h1>
+<div class = "container">
+	<div class = "row">
+		<div class = "row">
+			<div class = "span3 ">
+				<h2>
+				<?php echo $error; ?>
+				</h2>
 
-<?php
-$form = $this->form;
-$form->setAttribute('action', $this->url('User', array('action' => 'register')));
-$form->prepare();
+				<?php
+				$form = $this->form;
+				$form->setAttribute('action', $this->url('User', array('action' => 'register')));
+				$form->prepare();
+				?>
 
-?>
-<h2>
-<?php echo $error; ?>
-</h2>
-<?php
+				<?php echo $this->form()->openTag($form) . PHP_EOL; ?>
+					<fieldset>
+						<legend><?php echo $this->escapeHtml($title); ?></legend>
+						
+						<?php echo $this->formRow($form->get('firstname')) . PHP_EOL; ?>
+						
+						<?php echo $this->formRow($form->get('lastname')) . PHP_EOL; ?>
+						
+						<?php echo $this->formRow($form->get('email')) . PHP_EOL; ?>
 
-echo $this->form()->openTag($form) . PHP_EOL;
-echo $this->formRow($form->get('firstname')) . PHP_EOL;
-?><br /><br /><?php
-echo $this->formRow($form->get('lastname')) . PHP_EOL;
-?><br /><br /><?php
-echo $this->formRow($form->get('email')) . PHP_EOL;
-?><br /><br /><?php
-echo $this->formRow($form->get('description')) . PHP_EOL;
-?><br /><br /><?php
-echo $this->formRow($form->get('password')) . PHP_EOL;
-?><br /><br /><?php
-echo $this->formInput($form->get('submit')) . PHP_EOL;
-echo $this->form()->closeTag($form) . PHP_EOL;
+						<?php echo $this->formRow($form->get('description')) . PHP_EOL; ?>
 
-?>
+						<?php echo $this->formRow($form->get('password')) . PHP_EOL; ?>
+	
+						<hr>
+						
+						<?php echo $this->formInput($form->get('submit')) . PHP_EOL; ?>
+
+					</fieldset>
+				<?php echo $this->form()->closeTag($form) . PHP_EOL; ?>
+			</div>
+
+			<div class = "span6 ">
+				<img src="/images/lightBulb.png" id = "lightBulb">
+			</div>
+
+		</div>
+
+		<hr>
+
+
+
+
+
+
+
+
+
